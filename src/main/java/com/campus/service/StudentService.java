@@ -3,20 +3,13 @@ package com.campus.service;
 import com.campus.model.Student;
 import com.campus.repository.StudentRepo;
 import com.campus.utilities.CampusUtility;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.*;
-
-import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
 @Service
 @Slf4j
@@ -28,7 +21,7 @@ public class StudentService {
     @Autowired
     private CampusUtility campusUtility;
 
-    public String saveToDb(MultipartFile file, String sheetName) {
+    public String saveToDb(MultipartFile file, String sheetName,String collegeId) {
         String status = "failed";
         try{
             Workbook workbook = campusUtility.getWorkbook(file);
@@ -62,7 +55,7 @@ public class StudentService {
                 student.setBatch((long) row.getCell(7).getNumericCellValue());
                 List<String> certifications = List.of(row.getCell(8).getStringCellValue().split(","));
                 student.setCertifications(certifications);
-
+                student.setCollegeId(collegeId);
                 studentList.add(student);
 
                 }
@@ -78,8 +71,8 @@ public class StudentService {
         return status;
     }
 
-    public List<Student> fetchAllStudents(){
-        return studentRepo.findAll();
+    public List<Student> fetchAllStudentsByCollege(String collegeId){
+        return studentRepo.findByCollegeId(collegeId);
     }
 
     public Optional<Student> fetchStudentById(String id){

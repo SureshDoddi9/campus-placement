@@ -19,13 +19,15 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/uploadData")
-    public String uploadStudentData(@RequestParam("file") MultipartFile file, @RequestParam("sheet") String sheet){
-       return studentService.saveToDb(file,sheet);
+    public String uploadStudentData(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("sheet") String sheet,
+                                    @RequestParam("collegeId") String collegeId){
+       return studentService.saveToDb(file,sheet,collegeId);
     }
 
-    @GetMapping("/studentData")
-    public List<Student> studentData(){
-        return studentService.fetchAllStudents();
+    @GetMapping("/studentsData")
+    public List<Student> studentsData(@RequestParam("collegeId") String collegeId){
+        return studentService.fetchAllStudentsByCollege(collegeId);
     }
 
     @GetMapping("/findStudent")
