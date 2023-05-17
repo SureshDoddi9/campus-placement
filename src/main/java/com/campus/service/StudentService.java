@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
@@ -81,5 +78,12 @@ public class StudentService {
         return status;
     }
 
+    public List<Student> fetchAllStudents(){
+        return studentRepo.findAll();
+    }
+
+    public Optional<Student> fetchStudentById(String id){
+         return  studentRepo.findById(id);
+    }
 
 }
