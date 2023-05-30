@@ -2,7 +2,6 @@ package com.campus.controller;
 
 import com.campus.dto.CustomResponse;
 import com.campus.model.Job;
-import com.campus.model.Student;
 import com.campus.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
