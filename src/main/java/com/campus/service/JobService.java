@@ -25,7 +25,7 @@ public class JobService {
         String status = "failed";
         job.setId(campusUtility.generateUniqueId());
         Job savedJob = jobRepo.insert(job);
-        if(!savedJob.getId().isEmpty()){
+        if(savedJob.getId()!=null){
             status ="success";
         }
         return status;
