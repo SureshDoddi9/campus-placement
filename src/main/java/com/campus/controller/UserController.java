@@ -24,15 +24,30 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signUpCollege")
-    public String userSignupCollege(@RequestBody User user){
-        userService.saveUser(user);
-        return "registered succesfully...";
+    public ResponseEntity<Object> userSignupCollege(@RequestBody User user){
+        String status = userService.saveUser(user);
+        CustomResponse customResponse = new CustomResponse();
+        if(status.equalsIgnoreCase("exists")){
+            customResponse.setStatus("failed");
+            customResponse.setMessage("EmailId already exists...");
+        }else {
+            customResponse.setStatus("success");
+            customResponse.setMessage("registered succesfully...");
+        }
+        return ResponseEntity.ok(customResponse);
     }
 
     @PostMapping("/signUpCompany")
-    public String userSignupCompany(@RequestBody User user){
-        userService.saveUser(user);
-        return "registered succesfully...";
+    public ResponseEntity<Object> userSignupCompany(@RequestBody User user){
+        String status = userService.saveUser(user);
+        CustomResponse customResponse = new CustomResponse();
+        if(status.equalsIgnoreCase("exists")){
+            customResponse.setStatus("failed");
+            customResponse.setMessage("EmailId already exists...");
+        }
+        customResponse.setStatus("success");
+        customResponse.setMessage("registered succesfully...");
+        return ResponseEntity.ok(customResponse);
     }
 
     @GetMapping("/test")
@@ -47,7 +62,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(user.getEmailId(), user.getPassword()));
         }catch (Exception e){
 //            throw new Exception("Invalid UserName/Password");
-            return ResponseEntity.ok(new CustomResponse("login failed","Invalid UserName/Password"));
+            return ResponseEntity.ok(new CustomResponse("login failed","Invalid EmailId/Password"));
         }
         return ResponseEntity.ok(jwtUtil.generateToken(user.getEmailId()));
     }

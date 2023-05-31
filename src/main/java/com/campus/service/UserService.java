@@ -6,6 +6,8 @@ import com.campus.utilities.CampusUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -16,8 +18,15 @@ public class UserService {
     @Autowired
     private CampusUtility campusUtility;
 
-    public void saveUser(User user){
-        user.setId(campusUtility.generateUniqueId());
-        userRepo.save(user);
+    public String saveUser(User user){
+        String status = "success";
+        User userCheck = userRepo.findByEmailId(user.getEmailId());
+        if(userCheck.getEmailId().equalsIgnoreCase(user.getEmailId())){
+            status ="exists";
+        }else{
+            user.setId(campusUtility.generateUniqueId());
+            userRepo.save(user);
+        }
+        return status;
     }
 }
