@@ -1,6 +1,7 @@
 package com.campus.service;
 
 import com.campus.model.College;
+import com.campus.model.Company;
 import com.campus.model.User;
 import com.campus.repository.UserRepo;
 import com.campus.utilities.CampusUtility;
@@ -22,7 +23,10 @@ public class UserService {
     @Autowired
     private CollegeService collegeService;
 
-    public String saveUser(User user){
+    @Autowired
+    private CompanyService companyService;
+
+    public String saveCollege(User user){
         String status = "success";
         User userCheck = userRepo.findByEmailId(user.getEmailId());
         if(userCheck!=null){
@@ -35,6 +39,23 @@ public class UserService {
                     .id(id)
                     .emailId(user.getEmailId()).build();
             collegeService.updateCollege(college);
+        }
+        return status;
+    }
+
+    public String saveCompany(User user){
+        String status = "success";
+        User userCheck = userRepo.findByEmailId(user.getEmailId());
+        if(userCheck!=null){
+            status ="exists";
+        }else{
+            String id = campusUtility.generateUniqueId();
+            user.setId(id);
+            userRepo.save(user);
+            Company company = Company.builder()
+                    .id(id)
+                    .emailId(user.getEmailId()).build();
+            companyService.updateCompany(company);
         }
         return status;
     }

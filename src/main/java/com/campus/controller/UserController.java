@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/signUpCollege")
     public ResponseEntity<Object> userSignupCollege(@RequestBody User user){
-        String status = userService.saveUser(user);
+        String status = userService.saveCollege(user);
         CustomResponse customResponse = new CustomResponse();
         if(status.equalsIgnoreCase("exists")){
             customResponse.setStatus("failed");
@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/signUpCompany")
     public ResponseEntity<Object> userSignupCompany(@RequestBody User user){
-        String status = userService.saveUser(user);
+        String status = userService.saveCompany(user);
         CustomResponse customResponse = new CustomResponse();
         if(status.equalsIgnoreCase("exists")){
             customResponse.setStatus("failed");
