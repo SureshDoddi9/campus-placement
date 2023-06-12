@@ -48,9 +48,12 @@ public class JwtUtil  {
     }
 
     //generate token for user
-    public String generateToken(String userName) {
+    public String generateToken(String userName,String id,String role) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(userName);
+        claims.put("id",id);
+        claims.put("emailId",userName);
+        claims.put("role",role);
+        return doGenerateToken(userName,claims);
     }
 
     //while creating the token -
@@ -58,9 +61,9 @@ public class JwtUtil  {
     //2. Sign the JWT using the HS512 algorithm and secret key.
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
-    private String doGenerateToken(String subject) {
+    private String doGenerateToken(String subject,Map<String,Object> claims) {
 
-        return Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }

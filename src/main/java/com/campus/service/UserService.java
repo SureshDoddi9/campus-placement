@@ -34,6 +34,7 @@ public class UserService {
         }else{
             String id = campusUtility.generateUniqueId();
             user.setId(id);
+            user.setRole("college");
             userRepo.save(user);
             College college = College.builder()
                     .id(id)
@@ -51,6 +52,7 @@ public class UserService {
         }else{
             String id = campusUtility.generateUniqueId();
             user.setId(id);
+            user.setRole("company");
             userRepo.save(user);
             Company company = Company.builder()
                     .id(id)

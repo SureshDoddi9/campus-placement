@@ -2,6 +2,7 @@ package com.campus.controller;
 
 import com.campus.dto.CustomResponse;
 import com.campus.model.User;
+import com.campus.repository.UserRepo;
 import com.campus.service.UserService;
 import com.campus.utilities.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @PostMapping("/signUpCollege")
     public ResponseEntity<Object> userSignupCollege(@RequestBody User user){
@@ -64,6 +68,9 @@ public class UserController {
 //            throw new Exception("Invalid UserName/Password");
             return ResponseEntity.ok(new CustomResponse("login failed","Invalid EmailId/Password"));
         }
-        return ResponseEntity.ok(jwtUtil.generateToken(user.getEmailId()));
+        User userData = userRepo.findByEmailId(user.getEmailId());
+        String id = userData.getId();
+        String role = userData.getRole();
+        return ResponseEntity.ok(jwtUtil.generateToken(user.getEmailId(),id,role));
     }
 }

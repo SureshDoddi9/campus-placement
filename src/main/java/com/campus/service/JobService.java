@@ -66,7 +66,6 @@ public class JobService {
                 student.getSkills(),
                 student.getCertifications()
         );
-
         return jobs;
     }
 }
