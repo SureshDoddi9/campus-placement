@@ -2,6 +2,7 @@ package com.campus.controller;
 
 import com.campus.dto.CustomResponse;
 import com.campus.model.Job;
+import com.campus.model.Student;
 import com.campus.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,10 @@ public class JobController {
            message = "job deleted succesfully...";
        }
        return ResponseEntity.ok(new CustomResponse(status,message));
+    }
+
+    @PostMapping("/matchedJobs")
+    public ResponseEntity<Object> matchedJobs(@RequestBody Student student){
+        return ResponseEntity.ok(jobService.getMatchJobs(student));
     }
 }

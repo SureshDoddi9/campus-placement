@@ -9,4 +9,9 @@ import java.util.List;
 @Repository
 public interface JobRepo extends MongoRepository<Job,String> {
     List<Job> findByOrganisationId(String orgId);
+
+    List<Job> findByEducationInIgnoreCaseAndSkillsInIgnoreCaseAndCertificationsInIgnoreCase(
+            List<String> education,
+            List<String> skills,
+            List<String> certifications);
 }

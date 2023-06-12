@@ -58,4 +58,15 @@ public class JobService {
         }
         return status;
     }
+
+
+    public List<Job> getMatchJobs(Student student){
+        List<Job> jobs = jobRepo.findByEducationInIgnoreCaseAndSkillsInIgnoreCaseAndCertificationsInIgnoreCase(
+                student.getEducation(),
+                student.getSkills(),
+                student.getCertifications()
+        );
+
+        return jobs;
+    }
 }
