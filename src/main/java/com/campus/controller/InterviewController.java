@@ -2,6 +2,7 @@ package com.campus.controller;
 
 import com.campus.dto.CustomResponse;
 import com.campus.model.ScheduleInterview;
+import com.campus.service.EmailService;
 import com.campus.service.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,13 @@ public class InterviewController {
     @Autowired
     InterviewService interviewService;
 
+    @Autowired
+    EmailService emailService;
+
     @PostMapping("/scheduleInterview")
     public ResponseEntity<Object> scheduleInterview(@RequestBody ScheduleInterview scheduleInterview){
          String status = interviewService.saveInterview(scheduleInterview);
+         emailService.notifyByEmail(scheduleInterview);
          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CustomResponse(status,"Interview scheduled succesfully..."));
     }
 }
