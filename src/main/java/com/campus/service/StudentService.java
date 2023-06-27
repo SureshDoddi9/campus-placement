@@ -79,4 +79,8 @@ public class StudentService {
          return  studentRepo.findById(id);
     }
 
+    public String deleteStudentById(String id){
+        studentRepo.deleteById(id);
+        return "success";
+    }
 }

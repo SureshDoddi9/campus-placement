@@ -29,6 +29,16 @@ public class JobController {
         return ResponseEntity.ok(new CustomResponse(status,message));
     }
 
+    @PostMapping("/updateJob")
+    public ResponseEntity<Object> updateJob(@RequestBody Job job){
+        String status = jobService.updateJob(job);
+        String message = "job updation failed!";
+        if(status.equalsIgnoreCase("success")){
+            message = "job updated succesfully...";
+        }
+        return ResponseEntity.ok(new CustomResponse(status,message));
+    }
+
     @GetMapping("/jobsData")
     public List<Job> jobsData(@RequestParam("orgId") String orgId){
         return jobService.fetchAllJobsByOrganisation(orgId);

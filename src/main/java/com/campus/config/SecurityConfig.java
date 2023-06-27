@@ -18,7 +18,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -55,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/signUpCompany",
                         "/**/login",
                         "/swagger-ui/**",
+                        "/swagger-ui.html",
                         "/campus-placement-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
