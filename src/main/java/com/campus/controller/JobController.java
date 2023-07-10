@@ -7,6 +7,7 @@ import com.campus.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,8 +64,18 @@ public class JobController {
        return ResponseEntity.ok(new CustomResponse(status,message));
     }
 
-    @PostMapping("/matchedJobs")
-    public ResponseEntity<Object> matchedJobs(@RequestBody Student student){
-        return ResponseEntity.ok(jobService.getMatchJobs(student));
+    @GetMapping("/matchedJobs")
+    public ResponseEntity<Object> matchedJobs(@RequestParam("studentId") String studentId){
+        return ResponseEntity.ok(jobService.getMatchJobs(studentId));
+    }
+
+    @GetMapping("/appliedJobs")
+    public ResponseEntity<Object> appliedJobs(@RequestParam("studentId") String studentId){
+        return ResponseEntity.ok(jobService.getAppliedJobs(studentId));
+    }
+
+    @GetMapping("/getStudentProfiles")
+    public ResponseEntity<Object> getStudentProfiles(@RequestParam("jobId") String jobId){
+        return ResponseEntity.ok(jobService.getStudents(jobId));
     }
 }

@@ -26,6 +26,6 @@ public class InterviewController {
     public ResponseEntity<Object> scheduleInterview(@RequestBody ScheduleInterview scheduleInterview){
          String status = interviewService.saveInterview(scheduleInterview);
          emailService.notifyByEmail(scheduleInterview);
-         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CustomResponse(status,"Interview scheduled succesfully..."));
+         return ResponseEntity.status(HttpStatus.OK).body(new CustomResponse(status,"Interview scheduled succesfully..."));
     }
 }

@@ -14,4 +14,6 @@ public interface JobRepo extends MongoRepository<Job,String> {
             List<String> education,
             List<String> skills,
             List<String> certifications);
+
+    List<Job> findByApplicationsContains(String studentId);
 }

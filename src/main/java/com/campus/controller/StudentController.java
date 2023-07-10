@@ -49,4 +49,6 @@ public class StudentController {
         String status = studentService.deleteStudentById(id);
         return ResponseEntity.ok(new CustomResponse(status,"student deleted successfully..."));
     }
+
+
 }
